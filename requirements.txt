@@ -1,3 +1,4 @@
+requests==2.21.0
 mysql-connector-python
-requests
-config
+mysql.connector==8.0.18
+termcolor==1.1.0
