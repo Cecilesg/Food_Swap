@@ -12,20 +12,22 @@ total_product = 0
 total_load = 0
 total_analysis = 0
 
-print("-----------------------------------------------------------------------")
-print("1. Création et initialisation de la base de données.")
-print("2. Utiliser directement l'application.")
-print("0. Quitter le programme.")
-print("-----------------------------------------------------------------------")
-choice = int(input("\n"))
+print(colored("---------------------------------------------------------------",
+              'blue'))
+print(colored("1. Création et initialisation de la base de données.", 'blue'))
+print(colored("2. Utiliser directement l'application.", 'blue'))
+print(colored("0. Quitter le programme.", 'blue'))
+print(colored("---------------------------------------------------------------",
+              'blue'))
+choice = int(input(colored("\n ----> ", 'blue')))
 
 if choice == 1:
     db_set_reset.reset()
     # We should only call the API on first use
     instance = Database()
     categories = Category.get_categories_api()
-    nb_to_display = int(input("Combien de catégories voulez-vous télécharger "
-                              "? "))
+    nb_to_display = int(input(colored("Combien de catégories voulez-vous "
+                                      "télécharger ? ", 'magenta')))
     # We start with the number of products per category
     for i in range(1, nb_to_display + 1):
         category = Category(
@@ -44,31 +46,34 @@ if choice == 1:
                 total_analysis += 1
                 try:
                     product = Product(
-                        products["products"][k].get("product_name", "XXX"),
-                        products["products"][k].get("url", "missing url"),
+                        products["products"][k].get("product_name", colored(
+                            "XXX", 'red')),
+                        products["products"][k].get("url", colored(
+                            "Missing url", 'red')),
                         products["products"][k].get("nutrition_grade_fr", "E"),
-                        products["products"][k].get("id", "Missing "
-                                                                "bar_code"), i,
-                        products["products"][k].get("stores", "Missing "
-                                                             "information"),
-                        products["products"][k].get("image_url", "Missing "
-                                                                 "information"),
+                        products["products"][k].get("id", colored(
+                            "Missing bar_code", 'red')), i,
+                        products["products"][k].get("stores", colored(
+                            "Missing information", 'red')),
+                        products["products"][k].get("image_url", colored(
+                            "Missing information", 'red')),
                     )
                     product.display_product()
                     try:
-                        print("peanut")
                         instance.set_product(product)
                         total_load += 1
                     except:
-                        print("Produit rejeté de la base de données.")
+                        print(colored("Produit rejeté de la base de données.",
+                                      'red'))
                         pass
                 except:
-                    print("Produit rejeté pour cause d'informations "
-                          "essentielles manquantes.")
+                    print(colored("Produit rejeté pour cause d'informations "
+                          "essentielles manquantes.", 'red'))
     print(
-        "\n Ces {} catégories contiennent {} produits, dont {} ont été "
-        "analysés et retenus dans la base de données.".format(
-            nb_to_display, total_product, total_analysis, total_load)
+        colored("\n Ces {} catégories contiennent {} produits, dont {} ont été "
+                "analysés et retenus dans la base de données.".format(
+                 nb_to_display, total_product, total_analysis, total_load),
+                'green')
     )
 # If database already exists
 else:
@@ -76,18 +81,23 @@ else:
 
 start_menu = True
 while start_menu:
-    print("-------------------------------------------------------------------")
-    print("1. Afficher les catégories et faire une recherche.")
-    print("2. Consulter les favoris sauvegardés.")
-    print("0. Quitter le programme.")
-    print("-------------------------------------------------------------------")
-    choice = int(input())
+    print(colored("-----------------------------------------------------------",
+                  'blue'))
+    print(colored("1. Afficher les catégories et faire une recherche.", 'blue'))
+    print(colored("2. Consulter les favoris sauvegardés.", 'blue'))
+    print(colored("0. Quitter le programme.", 'blue'))
+    print(colored("-----------------------------------------------------------",
+                  'blue'))
+    choice = int(input(colored("\n ----> ", 'blue')))
     if choice == 1:
         instance.display_all_categories()
-        choice = int(input("Numéro de la catégorie : \n"))
+        choice = int(input(colored("Numéro de la catégorie : \n ----> ",
+                                   'magenta')))
         list = instance.display_product_from_category(choice)
-        choice = int(input("Choisissez un produit : \n"))
-        print("--------------------------Votre choix--------------------------")
+        choice = int(input(colored("Choisissez un produit : \n ----> ",
+                                   'magenta')))
+        print(colored("----------------------Votre choix----------------------",
+                      'green'))
 
         product = Product(
             list[choice - 1][2],
@@ -99,7 +109,8 @@ while start_menu:
             list[choice - 1][6],
         )
         product.display_product()
-        print("------------------------Votre substitut------------------------")
+        print(colored("--------------------Votre substitut--------------------",
+                      'green'))
         list = instance.search_swap(product.category, product.grade)
         swap = Product(
             list[0][2],
@@ -111,19 +122,21 @@ while start_menu:
             list[0][6],
         )
         swap.display_product()
-        choice = input("Sauvegardez votre choix dans les favoris ? "
-                       "O/N\n").upper()
+        choice = input(colored("Sauvegardez votre choix dans les favoris ? "
+                       "O/N\n ", 'green')).upper()
         if choice == "O":
             instance.set_favorite(swap)
         elif choice == "N":
             pass
         else:
-            print("Merci de choisir O ou N à l'aide de votre clavier.")
+            print(colored("C'est la mauvaise réponse, vous recommencez.",
+                          'yellow'))
             pass
     elif choice == 2:
         instance.display_all_favorites()
     elif choice == 0:
-        print("Merci et au revoir.")
+        print(colored("Merci et au revoir.", 'magenta'))
         start_menu = False
     else:
-        print("Merci de choisir 1, 2 ou 0 à l'aide de votre clavier.")
+        print(colored("Merci de choisir 1, 2 ou 0 à l'aide de votre clavier.",
+                      'yellow'))

@@ -1,5 +1,6 @@
 from math import ceil
 import requests
+from termcolor import colored
 
 # It's important to remember that the more we request specifics of a
 # product the less probability we have to find matching products for the
@@ -19,14 +20,16 @@ class Category:
 
     def display_category(self):
         """Method to display category info in a readable lay out"""
-        print("\n####################################")
+        print(colored("\n#####################################################",
+                      'magenta'))
         print(self.id, " - ", end=" ")
         print(self.name, end="      ")
         print("(", self.name_en, ")")
         print("\t Nombre de produits :", self.nb_products, end=" ")
         print("\t Nombre de pages :", self.pages)
         print("\t", self.url)
-        print("\n####################################")
+        print(colored("\n#####################################################",
+                      'magenta'))
 
     def get_product_api(self, page):
         """Method to retrieve a product page from a category"""
@@ -38,11 +41,13 @@ class Category:
     @staticmethod
     def get_categories_api():
         """Method to find categories from the OpenFooFacts API"""
-        print("... Patientez ... Votre requête est en cours ...")
+        print(colored("... Patientez ... Votre requête est en cours ...",
+                      'green'))
         r = requests.get("https://fr.openfoodfacts.org/categories.json")
         categories = r.json()
         nb_categories = categories.get("count")
-        print(" {} catégories présentes sur le site.".format(nb_categories))
+        print(colored(" {} catégories présentes sur le site.\n",
+                      'green').format(nb_categories))
         # OFF has about 12800 categories. Let's select only a dozen.
         return categories
 
@@ -65,16 +70,18 @@ class Product:
 
     def display_product(self):
         """Method that displays product info"""
-        print("--------------------------------------------")
-        print("Nom : \t", self.name, end="      ")
+        print(colored("-------------------------------------------------------",
+                      'magenta'))
+        print(colored("Nom : \t", 'magenta'), self.name, end="      ")
         # product_name_fr # generic_name # categories
-        print("Note : \t", self.grade.upper())
-        print("url : \t", self.url)
-        print("Code barre : \t", self.bar_code)
-        print("Catégorie : \t", self.category)
-        print("En vente ici : \t", self.store, end="      ")
-        print("Image : ", self.image_url)
-        print("--------------------------------------------")
+        print(colored("Note : \t", 'magenta'), self.grade.upper())
+        print(colored("url : \t", 'magenta'), self.url)
+        print(colored("Code barre : \t", 'magenta'), self.bar_code)
+        print(colored("Catégorie : \t", 'magenta'), self.category)
+        print(colored("En vente ici : \t", 'magenta'), self.store, end="      ")
+        print(colored("Image : ", 'magenta'), self.image_url)
+        print(colored("-------------------------------------------------------",
+                      'magenta'))
 
     def best_product(self):
         """Method that presents our product in a better way"""

@@ -1,5 +1,6 @@
 import mysql.connector  # mysql-connector-python cf. Requirement.txt
-from config import *
+from termcolor import colored
+
 
 # We define a single class to interact with our database
 class Database:
@@ -10,7 +11,7 @@ class Database:
         self.mydb = mysql.connector.connect(
             host="localhost",
             user="root",  # Fill in your user name
-            passwd="insert_your_password",  # Fill in your password
+            passwd="insert_your_pasword",  # Fill in your password
             database="myfoodswap",  # Create your local database myfoodswap
         )
         self.mycursor = self.mydb.cursor()
@@ -28,7 +29,6 @@ class Database:
 
     def set_product(self, product):
         """Method that adds a product into the database"""
-        print("coucou")
         sql = """INSERT INTO Products(id_product, url, name, grade, category, 
                 store, image) VALUES (%s, %s, %s, %s, %s, %s, %s)"""
         val = (
@@ -40,11 +40,10 @@ class Database:
             product.store,
             product.image_url
         )
-        print(val)
         self.mycursor.execute(sql, val)
         self.mydb.commit()
-        print(self.mycursor.rowcount, "fiche produit insérée.")
-
+        print(colored(self.mycursor.rowcount, 'green'),
+              colored("fiche produit insérée.", 'green'))
 
     def set_favorite(self, product):
         """Method that registers user favorite products in the database"""
