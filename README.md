@@ -22,9 +22,6 @@ username and password
 6. In terminal = python3 food_swap.py
 
 # How the program works:
-To run the program, in terminal:
-python3 food_swap.py
-
 At first the program will format our MySQL database called myfoodswap, 
 contact the API and make the OpenFoodFacts data available by filling in the
 database.
