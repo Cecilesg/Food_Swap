@@ -1,44 +1,37 @@
 # Food_Swap
-A program that communicates with the Open Food Facts API and allows users who
-want to eat better and be healthier to find replacement foods for the ones
-they wish to leave behind.
+A program that communicates with the OpenFoodFacts API and allows users who
+would like to find replacement foods for the ones they wish to swap.
 
 # Requirements and installations
 1. Clone from GitHub = https://github.com/Cecilesg/Food_Swap
 
 2. Launch terminal in local repository Food_Swap
 
-3. In terminal = mysql -u root -p
+3. In terminal = pip install -r requirements.txt
 
-2. In MySQL = CREATE DATABASE IF NOT EXISTS myfoodswap CHARACTER SET 'utf8';
-
-3. In MySQL = exit;
-
-4. In terminal = pip install -r requirements.txt
-
-5. In text editor open db_set_reset.py and database.py and fill in MySQL
+4. In text editor open db_set_reset.py and database.py and fill in MySQL
 username and password
 
 6. In terminal = python3 food_swap.py
 
-# How the program works:
-At first the program will format our MySQL database called myfoodswap, 
-contact the API and make the OpenFoodFacts data available by filling in the
-database.
+# How the app works:
+When the user runs the program, the app will start by asking them to choose
+what action to take.
 
-In a second time the program will ask the user what they want to consult in 
-the database.
+If it is the first time the user runs the program, the app will create and
+design the myfoodswap MySQL database. Then it will contact the the OpenFoodFacts
+API to request the amount of product categories available.
 
-Next the program will call up the data chosen only if it fits the 
-requirements in place. The amount of data is fixed and readable because of a 
-designed layout.
+The user can then decide how many categories they wish to consult and
+therefor the app will insert into myfoodswap database a number of products from
+these categories as long as they fit the product parameters.
 
-The user must then choose a category of products from the ones they summoned. A 
-list of product names will be displayed and user must choose the product they 
-wish to swap for a better one.
+The user will be prompted with a new choice to search within the database
+categories for a product they wish to swap with a healthier replacement.
 
-The program will return a comparable product from the same category with a 
-better grade.
+The app algorithm will answer them with the best graded product in the
+category of their choice. The user have the choice to insert that product into
+their favorites, which is another table of the myfoodswap database.
 
-The user can decide to save the result or not, start a new search or quit the 
-program.
+The user can use their uploaded categories again for another
+swap, consult their favorites, or quit or start over.
