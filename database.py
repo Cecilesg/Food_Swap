@@ -1,8 +1,9 @@
 import mysql.connector  # mysql-connector-python cf. Requirement.txt
+from config import *
 from termcolor import colored
 
 
-# We define a single class to interact with our database
+# We design a single class to interact with our database
 class Database:
     """A class to interact with myfoodswap database"""
 
@@ -11,8 +12,8 @@ class Database:
         self.mydb = mysql.connector.connect(
             host="localhost",
             user="root",  # Fill in your user name
-            passwd="insert_your_pasword",  # Fill in your password
-            database="myfoodswap",  # Create your local database myfoodswap
+            passwd="Insert_Your_MySQL_Password",  # Fill in your password
+            database="myfoodswap",  # Created by db_set_reset.py
         )
         self.mycursor = self.mydb.cursor()
 
@@ -92,13 +93,14 @@ class Database:
         return self.mycursor.fetchall()
 
     def display_all_favorites(self):
-        """Method to display all favorite poducts"""
+        """Method to display all favorite products"""
         list = self.get_all_favorites()
         for i in range(len(list)):
             print(i + 1, ".\t", list[i][2], "(", list[i][3], ")")
 
-    def search_swap(self, cat, grade):
-        """Method that returns products from category cat with a better grade"""
+    def search_swap(self, cat, grade):  # This is the algorithm for the swap
+        """Method that returns the product from selected category with the
+        best grade"""
         sql = """Select *
                 From Products
                 WHERE category = (%s) AND grade <= (%s)

@@ -21,6 +21,7 @@ print(colored("---------------------------------------------------------------",
               'blue'))
 choice = int(input(colored("\n ----> ", 'blue')))
 
+menu = True
 if choice == 1:
     db_set_reset.reset()
     # We should only call the API on first use
@@ -65,22 +66,22 @@ if choice == 1:
                     except:
                         print(colored("Produit rejeté de la base de données.",
                                       'red'))
-                        pass
                 except:
                     print(colored("Produit rejeté pour cause d'informations "
                           "essentielles manquantes.", 'red'))
     print(
-        colored("\n Ces {} catégories contiennent {} produits, dont {} ont été "
+        colored("\nCes {} catégories contiennent {} produits, dont {} ont été "
                 "analysés et retenus dans la base de données.".format(
                  nb_to_display, total_product, total_analysis, total_load),
                 'green')
     )
-# If database already exists
-else:
-    instance = Database()
+elif choice == 0:
+    menu = False
 
+# If database already exists
+instance = Database()
 start_menu = True
-while start_menu:
+while start_menu and menu:
     print(colored("-----------------------------------------------------------",
                   'blue'))
     print(colored("1. Afficher les catégories et faire une recherche.", 'blue'))
@@ -91,12 +92,13 @@ while start_menu:
     choice = int(input(colored("\n ----> ", 'blue')))
     if choice == 1:
         instance.display_all_categories()
-        choice = int(input(colored("Numéro de la catégorie : \n ----> ",
+        choice = int(input(colored("\nNuméro de la catégorie : \n ----> ",
                                    'magenta')))
         list = instance.display_product_from_category(choice)
-        choice = int(input(colored("Choisissez un produit : \n ----> ",
+        choice = int(input(colored("\nChoisissez un produit : \n ----> ",
                                    'magenta')))
-        print(colored("----------------------Votre choix----------------------",
+        print(colored("\n"
+                      "----------------------Votre choix----------------------",
                       'green'))
 
         product = Product(
@@ -109,7 +111,8 @@ while start_menu:
             list[choice - 1][6],
         )
         product.display_product()
-        print(colored("--------------------Votre substitut--------------------",
+        print(colored("\n"
+                      "--------------------Votre substitut--------------------",
                       'green'))
         list = instance.search_swap(product.category, product.grade)
         swap = Product(
@@ -122,21 +125,23 @@ while start_menu:
             list[0][6],
         )
         swap.display_product()
-        choice = input(colored("Sauvegardez votre choix dans les favoris ? "
+        choice = input(colored("\nSauvegardez votre choix dans les favoris ? "
                        "O/N\n ", 'green')).upper()
         if choice == "O":
             instance.set_favorite(swap)
         elif choice == "N":
             pass
         else:
-            print(colored("C'est la mauvaise réponse, vous recommencez.",
+            print(colored("\nC'est la mauvaise réponse, vous recommencez.",
                           'yellow'))
             pass
     elif choice == 2:
         instance.display_all_favorites()
     elif choice == 0:
-        print(colored("Merci et au revoir.", 'magenta'))
+        print(colored("\nMerci et au revoir.", 'magenta'))
         start_menu = False
     else:
-        print(colored("Merci de choisir 1, 2 ou 0 à l'aide de votre clavier.",
+        print(colored("\nMerci de choisir 1, 2 ou 0 à l'aide de votre clavier.",
                       'yellow'))
+
+print(colored("\nVous quittez le programme.", 'magenta'))

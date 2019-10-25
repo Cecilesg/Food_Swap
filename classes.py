@@ -41,19 +41,19 @@ class Category:
     @staticmethod
     def get_categories_api():
         """Method to find categories from the OpenFooFacts API"""
-        print(colored("... Patientez ... Votre requête est en cours ...",
+        print(colored("\n... Patientez ... Votre requête est en cours ...",
                       'green'))
         r = requests.get("https://fr.openfoodfacts.org/categories.json")
         categories = r.json()
         nb_categories = categories.get("count")
-        print(colored(" {} catégories présentes sur le site.\n",
+        print(colored("\n{} catégories présentes sur le site.\n",
                       'green').format(nb_categories))
         # OFF has about 12800 categories. Let's select only a dozen.
         return categories
 
 
 class Product:
-    """Class representing object Product"""
+    """Class representing object product"""
 
     instance_counter = 0
 
@@ -66,7 +66,7 @@ class Product:
         self.category = category
         self.image_url = image_url
         self.store = store
-        self.best_product()
+        self.clean_product()
 
     def display_product(self):
         """Method that displays product info"""
@@ -83,8 +83,8 @@ class Product:
         print(colored("-------------------------------------------------------",
                       'magenta'))
 
-    def best_product(self):
-        """Method that presents our product in a better way"""
+    def clean_product(self):
+        """Method that presents products with better grade lay out"""
         if self.grade in ["a", "b", "c", "d", "e"]:
             self.grade = self.grade.upper()
         elif self.grade not in ["A", "B", "C", "D", "E"]:

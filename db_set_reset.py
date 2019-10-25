@@ -1,4 +1,5 @@
 import mysql.connector  # mysql-connector-python cf. requirements.txt
+from config import *
 
 
 def reset():
@@ -6,8 +7,7 @@ def reset():
     mydb = mysql.connector.connect(
         host="localhost",
         user="root",
-        passwd="insert_your_pasword",)
-    # You must create myfoodswap local database in your MySQL
+        passwd="Insert_Your_MySQL_Password",)
     # We use mysql-connector-python to execute MySQL commands in MySQL
     mycursor = mydb.cursor()
     mycursor.execute("DROP DATABASE IF EXISTS myfoodswap")
@@ -15,7 +15,7 @@ def reset():
     mycursor.execute("USE myfoodswap")
 
     ############################################################################
-    #                              Tables Creation                             #
+    #                              Table Creation                              #
     ############################################################################
 
     mycursor.execute("CREATE TABLE IF NOT EXISTS Categories("
@@ -35,7 +35,7 @@ def reset():
                      "VARCHAR(255))")
 
     ############################################################################
-    #                             Tables Modification                          #
+    #                             Table Modification                           #
     ############################################################################
 
     mycursor.execute("ALTER TABLE Products "
