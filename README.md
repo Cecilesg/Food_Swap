@@ -30,7 +30,7 @@ The user will be prompted with a new choice to search within the database
 categories for a product they wish to swap with a healthier replacement.
 
 The app algorithm will answer them with the best graded product in the
-category of their choice. The user have the choice to insert that product into
+category of their choice. The user has the choice to insert that product into
 their favorites, which is another table of the myfoodswap database.
 
 The user can use their uploaded categories again for another
