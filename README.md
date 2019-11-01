@@ -1,6 +1,5 @@
 # Food_Swap
-A program that communicates with the OpenFoodFacts API and allows users who
-would like to find replacement foods for the ones they wish to swap.
+A program that communicates with the OpenFoodFacts API and allows users to find replacement foods for the ones they wish to swap.
 
 # Requirements and installations
 1. Clone from GitHub = https://github.com/Cecilesg/Food_Swap
